@@ -29,7 +29,7 @@ def validar_stock(stock):
     return (stock > 0)
 
 def rebasteser_stock(ventas):
-    codigo = input("Ingrese el codigo que busca: ")
+    codigo = input("Ingrese el codigo que busca: ").upper()
     posicion = buscar_codigo(ventas, codigo)
     if posicion != -1:
         while True:
@@ -47,13 +47,39 @@ def rebasteser_stock(ventas):
         print("Codigo no esta registrado")
 
 def eliminar_producto(ventas):
-    codigo = input("Ingrese el codigo a eliminar: ")
+    codigo = input("Ingrese el codigo a eliminar: ").upper()
     posicion = buscar_codigo(ventas, codigo)
     if posicion != -1:
         ventas.pop(posicion)
         print("Producto eliminado")
     else:
         print("Producto no encontrado")
+
+def registrar_venta (productos, ventas):
+    codigo = input("Ingrese el codigo del producto que vendera: ").upper()
+    posicion = buscar_codigo(productos, codigo)
+    if posicion != -1:
+        while True:
+            try:
+                cantidad = int(input("Ingrese la cantidad a vender: "))
+                if validar_stock (cantidad) and  cantidad <= productos[posicion]['stock']:
+                    break
+                else:
+                    print("la cantidad no puede ser 0 o menor tampoco puede superar el stock.")
+                    print(f"EL stock actual es: {productos[posicion]['stock']}")
+            except ValueError:
+                print("Valor debe ser un numero")
+
+        total_pagar = productos[posicion]['precio'] * cantidad
+        productos[posicion]['stock'] -= cantidad
+        print(f"Total a pagar: {total_pagar}")
+        nueva_clave = len(ventas) + 1
+        ventas[nueva_clave]={'codigo_prod': codigo,
+                             'cantidad': cantidad,
+                             'total': total_pagar}
+
+    
+        print("Venta registrada")
 
 
 def principal ():
@@ -73,18 +99,19 @@ def principal ():
         opcion = opcion_menu()
 
         if opcion == 1:
-            print(productos)
-            print(ventas)
+            registrar_venta(productos, ventas)
         elif opcion == 2:
             codigo = input("ingrese el codigo que busca: ").upper()
-            if codigo.upper() in productos:
-                posicion = buscar_codigo(productos,codigo)
+        
+            posicion = buscar_codigo(productos,codigo)
+            if posicion != -1:
                 print("===== PRODUCTO ======")
                 print(f"Nombre: {productos[codigo]['nombre']}")
                 print(f"Precio: {productos[codigo]['precio']}")
                 print(f"Stock: {productos[codigo]['stock']}")
             else:
-                print("Codigo no encontrado.")
+                print("Codigo no encontrado")
+            
         
         elif opcion == 3:
             rebasteser_stock(productos)
@@ -96,7 +123,7 @@ def principal ():
             print("Gracias adios")
             break
 
-        
+        print(ventas)
 
 if __name__ == "__main__":
     principal()
