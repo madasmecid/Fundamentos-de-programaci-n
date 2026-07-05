@@ -22,10 +22,10 @@ def opcion_menu():
 #======================================
 
 def validar_rut(rut):
-    return(len(rut.strip()>= 9 and len(rut.strip() <= 10)))
+    return(len(rut.strip())>= 9 and len(rut.strip()) <= 10)
 
 def validar_nombre(nombre):
-    return(len(nombre.strip() >= 3))
+    return(len(nombre.strip()) >= 3)
 
 def validar_puntos(puntos):
     return(puntos >= 0)
@@ -35,10 +35,10 @@ def validar_puntos(puntos):
 #======================================
 
 def buscar_rut (clientes_vip, rut_buscar):
-    for i in range (len(clientes_vip)):
-        if clientes_vip[i] == rut_buscar:
-            return i
-    return -1
+    if rut_buscar in clientes_vip:
+        return rut_buscar
+    else:
+        return -1
 
 #======================================
 #FUNCIÓN DE AGREGAR
@@ -66,12 +66,65 @@ def agregar_rut(clientes_vip):
                 break
             else:
                 print("Dato ingresado no es valido.")
+        except ValueError:
+            print("Dato ingresado no es valido.")
 
-    #PENDIENTE AGREGAR
+    clientes_vip[rut] = {"nombre": nombre, "puntos": puntos, "categoria": "Gold"}
+    print("Cliente agregado exitosamente.")
 
+#======================================
+#FUNCIÓN MODIFICAR REGISTRO
+#======================================
 
+def modificar_cliente(clientes_vip):
+    rut = input("Ingrese el rut del cliente a modificar: ")
+    posicion = buscar_rut(clientes_vip, rut)
+    if posicion != -1:
+        cliente = clientes_vip[rut]
+        print(f"Cliente encontrado: {cliente['nombre']}, Puntos: {cliente['puntos']}, Categoría: {cliente['categoria']}")
+        
+        while True:
+            nombre = input("Ingrese nuevo nombre (dejar en blanco para no modificar): ")
+            if nombre == "" or validar_nombre(nombre):
+                break
+            else:
+                print("Nombre no es valido.")
 
+        while True:
+            puntos_input = input("Ingrese nuevos puntos (dejar en blanco para no modificar): ")
+            if puntos_input == "":
+                puntos = cliente['puntos']
+                break
+            try:
+                puntos = int(puntos_input)
+                if validar_puntos(puntos):
+                    break
+                else:
+                    print("Dato ingresado no es valido.")
+            except ValueError:
+                print("Dato ingresado no es valido.")
 
+        if nombre != "":
+            cliente['nombre'] = nombre
+        cliente['puntos'] = puntos
+
+        print("Cliente modificado exitosamente.")
+
+    else:
+        print("Cliente no encontrado.")
+
+#======================================
+#FUNCIÓN ELIMINAR REGISTRO
+#======================================
+
+def eliminar_cliente(clientes_vip):
+    rut = input("Ingrese el rut del cliente a eliminar: ")
+    posicion = buscar_rut(clientes_vip, rut)
+    if posicion != -1:
+        del clientes_vip[rut]
+        print("Cliente eliminado exitosamente.")
+    else:
+        print("Cliente no encontrado.")
 
 
 
@@ -91,17 +144,27 @@ def principal ():
         opcion = opcion_menu()
 
         if opcion == 1:
-            pass
+            agregar_rut(clientes_vip)
         
         elif opcion == 2:
-            pass
+            rut_buscar = input("Ingrese el rut del cliente a buscar: ")
+            indice = buscar_rut(clientes_vip, rut_buscar)
+            if indice != -1:
+                cliente = clientes_vip[rut_buscar]
+                print(f"Cliente encontrado: {cliente['nombre']}, Puntos: {cliente['puntos']}, Categoría: {cliente['categoria']}")
+            else:
+                print("Cliente no encontrado.")
         
         elif opcion == 3:
-            pass
+            modificar_cliente(clientes_vip)
         
         elif opcion == 4:
-            pass
+            eliminar_cliente(clientes_vip)
         
         elif opcion == 5:
             print("Adios")
             break
+
+
+if __name__ == "__main__":
+    principal()
