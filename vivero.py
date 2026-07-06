@@ -7,18 +7,19 @@ def mostrar_menu():
     print("2. Busqueda por precio")
     print("3. Agregar planta")
     print("4. Actualizar precio")
-    print("5. Salir")
+    print("5. Eliminar planta")
+    print("6. Salir")
 
 def opcion_menu ():
     while True:
         try:
             opcion = int(input("Ingrese una opción: "))
-            if opcion >= 1 and opcion <= 5:
+            if opcion >= 1 and opcion <= 6:
                 return opcion
             else:
                 print("Opcion fuera de rango")
         except ValueError:
-            print("Opcion debe ser un numero entero entre 1 y 5.")
+            print("Opcion debe ser un numero entero entre 1 y 6.")
 
 #=======================================
 #FUNCIÓN DE BUSQUEDA
@@ -96,7 +97,15 @@ def agregar_planta(codigo, tipo, nombre, color, luz, riego, precio, cantidad, pl
      inventario [codigo] = [precio, cantidad]
      return True
     
-
+#=======================================
+#FUNCIÓN ACTUALIZAR PRECIO
+#=======================================
+def actualizar_precio(codigo, precio, plantas, inventario):
+    if planta_existe(codigo, plantas):
+        inventario[codigo][0] = precio
+        return True
+    
+    return False
     
 
 #=======================================
@@ -116,7 +125,7 @@ def principal ():
                   }
     
     inventario = { 'SUC01': [3990, 20], 
-                  'SUC02': [4490, 15], ''
+                  'SUC02': [4490, 15],
                   'INT01': [6990, 10], 
                   'INT02': [12990, 4], 
                   'EXT01': [5490, 8], 
@@ -159,7 +168,7 @@ def principal ():
                 print("NO se encontro nada en ese rango.")
         
         elif opcion == 3:
-            codigo = input("Ingrese codigo: ")
+            codigo = input("Ingrese codigo: ").upper()
             if planta_existe(codigo, plantas):
                 print("Planta ya existe!")
                 continue
@@ -181,9 +190,23 @@ def principal ():
 
 
         elif opcion == 4:
-            pass
+            codigo = input("Ingrese el codigo: ").upper()
+            while True:
+                try:
+                    precio = int(input("Ingrese el precio nuevo: "))
+                    break
+                except ValueError:
+                    print("Valor debe ser numerico")
+            nuevo_precio = actualizar_precio(codigo, precio, plantas, inventario)
+            if nuevo_precio:
+                print("Precio actualizado")
+            else:
+                print("No se actualizo")
 
         elif opcion == 5:
+            pass
+
+        elif opcion == 6:
             print("Adios")
             break
 if __name__ == "__main__":
