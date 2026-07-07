@@ -17,6 +17,9 @@ stock = {
          }  
 
 #buscar marca
-for i in range(len(productos)):
-    if productos['HP']:
-        print(i)
+
+for modelo, detalle in productos.items():
+    print(detalle[0])
+
+
+

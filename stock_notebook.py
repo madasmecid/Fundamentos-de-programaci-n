@@ -93,16 +93,105 @@ def busqueda_precio(p_min, p_max):
     else:
         print("no hay Notebook en este rango")
 
-    return 'S✔0oyUnT'    
+    return 'S✔0oyUnT'  
+
+#==============================
+# FUNCION DE ACTUALIZAR DATOS
+#==============================
+
+def actualizar_precio(modelo, precio):
+    if modelo in stock:
+        stock[modelo][0] = precio
+        return True
+    
+    return False
+        
+    
+def mostrar_menu ():
+    print("*** MENU PRINCIPAL ***")
+    print("1. Stock marca.")
+    print("2. Búsqueda por precio.")
+    print("3. Actualizar precio.")
+    print("4. Salir.")
+
+def opcion_menu():
+    while True:
+        opcion = input("Ingrese una opción: ")
+        if opcion in ['1','2','3','4']:
+            return int(opcion)
+        print("Opcion no valida. vuelva a intentar")
 
 
 
+
+#=============================
+#FUNCION PRINCIPAL MAIN
+#=============================
 def principal ():
+    while True:
+        mostrar_menu()
+        opcion = opcion_menu()
 
-   p_min = int(input("Ingrese el minimo: "))
-   p_max =int(input("Ingrese maximo: "))
+        if opcion == 1:
+            marca_ingresada = input("ingrese marca a consultar: ")
+            stock_marca(marca_ingresada)
+        elif opcion == 2:
+            while True:
+                try:
+                    p_min = int(input("Ingrese precio minimo: "))
+                    p_max = int(input("Ingrese precio maximo: "))
 
+                    buscar_precio(p_min,p_max)
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+        elif opcion == 3:
+            while True:
+                
+
+                    
+                    modelo = input ("Ingrese modelo actualizar: ")
+                    try:
+                        nuevo_precio = int(input("Ingrese nuevo precio: "))
+                    except ValueError:
+                        print("Valor ingresado debe ser nuerico.")
+                        continue
+    
+                    if actualizar_precio(modelo, nuevo_precio):
+                        print("Precio actualizado")
+                    else:
+                        print("El modelo no existe")
+    
+                    continuar = input("Desea actualizar otro precio (s/n)?: ").lower()
+                    if continuar == 'n' or continuar == 'no':
+                        break
+        elif opcion == 4:
+            print("Adios ")
+            break
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<<<<<<< HEAD
    busqueda_precio(p_min, p_max)
+=======
+>>>>>>> be43a94e9e3f75b47abc13ee8f9bd6931952f1fe
 
 
 if __name__ == "__main__":
