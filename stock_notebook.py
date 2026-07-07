@@ -57,8 +57,15 @@ def stock_marca(marca):
 #========================================
 #FUNCION PARA BUSCAR PRECIO POR RANGO
 #========================================
+"""creamos una lista donde se guardara lo encontrado, iniciamos un ciclo con dos variables, modelo que guarda la llave y info_stock que
+guarda el valor completo, en el diccionario stock usaremos items ya que será la lista a recorrer, creamos la variable precio
+aqui guardaremos el valor de info stock en el indice 0 este contiene el precio del notebook, luego creamos la variable 
+cantidad que esta guardara info stock indice 1 que este contiene el stock o cantidad de notebook, ahora con los rangos 
+usamos una condicinal y si lo guardado en esa lista esta dentro del rango de precio ingresado por el usario y ademas
+el stock es mayor a 0 agregamos a la lista encontrado con append la marca y modelo al final de la lista. ahora si encontrado es True
+ordenamos con sort la lista alfabeticamente, y a imprimimos, si es false inprimimos no encontrado en este rango"""
 
-def buscar_precio(p_min, p_max):
+def busqueda_precio(p_min, p_max):
     #creamos una lista vacia donde guardaremos lo que encontremos
     encontrados = []
 
@@ -72,9 +79,9 @@ def buscar_precio(p_min, p_max):
 
         #Verificamos que este en el rango del usuario y que el stock sea mayor a 0
         if p_min <= precio <= p_max and cantidad > 0:
-            #creamos la variable marc[a que guardara del diccionario producto la clave modelo con el valor del indice 0
+            #creamos la variable marca que extra del diccionario productos lo que se encuentre en modelo en el indice 0 (modelo es lo guardado en la primera variable del ciclo)
             marca = productos[modelo][0]
-            #agregamos a la lista encontrados
+            #agregamos a la lista encontrados al final de la lista
             encontrados.append(f"{marca}--{modelo}")
 
     #si encontrados es verdadero
@@ -84,7 +91,7 @@ def buscar_precio(p_min, p_max):
         #Imprimimos los encontrados
         print(f"Los encontrados son: {encontrados}")
     else:
-        print("Notebook no encontrados")
+        print("no hay Notebook en este rango")
 
     return 'S✔0oyUnT'    
 
@@ -95,7 +102,7 @@ def principal ():
    p_min = int(input("Ingrese el minimo: "))
    p_max =int(input("Ingrese maximo: "))
 
-   buscar_precio(p_min, p_max)
+   busqueda_precio(p_min, p_max)
 
 
 if __name__ == "__main__":
