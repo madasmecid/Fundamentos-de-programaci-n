@@ -224,7 +224,7 @@ def principal ():
                 print("Planta no existe!")
 
         elif opcion == 6:
-            print("Adios")
+            print("Programa finalizado.")
             break
 if __name__ == "__main__":
     principal()
