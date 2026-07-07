@@ -76,10 +76,8 @@ def agregar_producto(codigo, tipo, nombre, sabor, tamaño, vegano, precio, canti
 #==============================
 def actualizar_precio(codigo, precio, inventario):
     if  existe_producto(codigo, inventario):
-        for producto, detalle in inventario.items():
-            if producto.lower() == codigo.lower():
-                detalle[0] = precio
-                return True
+        inventario[codigo][0] = precio
+        return True
     return False
 
 #==============================
