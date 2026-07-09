@@ -17,9 +17,9 @@ def opcion_menu ():
             if opcion >= 1 and opcion <= 6:
                 return opcion
             else:
-                print("Opcion fuera de rango")
+                print("Opcion no valida!!")
         except ValueError:
-            print("Opcion debe ser un numero entero entre 1 y 6.")
+            print("Opcion no valida!!")
 
 #=======================================
 #FUNCIÓN DE BUSQUEDA
@@ -110,7 +110,10 @@ def actualizar_precio(codigo, precio, plantas, inventario):
 #=======================================
 #FUNCIÓN ELIMINAR PLANTA
 #=======================================
-
+"""Esta funcion recibe como argumento el codigo, diccionarios plantas e inventario,
+reutiliza la funcion planta existe(busqueda) si esta entrega True entra al diccionario
+plantas en la clave codigo que coincide con la que ingreso el usario y elimina con "deñl"
+hce lo mismo en inventario y retorna True, sino retorna False"""
 def eliminar_planta(codigo, plantas, inventario):
     if planta_existe(codigo,plantas):
         del plantas[codigo]
@@ -188,9 +191,18 @@ def principal ():
             color = input("Color: ")
             luz = input("Luz: ")
             riego = input("Riego: ")
-
-            precio = int(input("Precio: "))
-            cantidad = int(input("Cantidad: "))
+            while True:
+                try:
+                    precio = int(input("Precio: "))
+                    break
+                except ValueError:
+                    print("Ingrese un valor numerico entero!")
+            while True:
+                try:
+                    cantidad = int(input("Cantidad: "))
+                    break
+                except ValueError:
+                    print("Ingrese un valor numerico entero!")
 
             nueva_planta = agregar_planta(codigo, tipo, nombre, color, luz, riego, precio, cantidad, plantas, inventario)
 
