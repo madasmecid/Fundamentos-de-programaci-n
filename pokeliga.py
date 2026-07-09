@@ -100,7 +100,7 @@ def main ():
 
 
         elif opcion == 3:
-            codigo = input("Ingrese el codigo a actualizar: ")
+            codigo = input("Ingrese el codigo a actualizar: ").upper()
         
             while True:
                 try:

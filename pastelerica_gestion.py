@@ -18,9 +18,9 @@ def leer_opcion():
             if opcion >= 1 and opcion <= 6:
                 return opcion
             else:
-                print("opcion valida!!")
+                print("Debe seleccionar una opcion valida!!")
         except ValueError:
-            print("opcion valida!!")
+            print("Debe seleccionar una opcion valida!!")
 
 #==============================
 #FUNCIÓN DE BUSQUEDA
@@ -53,7 +53,7 @@ def busqueda_precio(p_min,p_max,productos, inventario):
         precio = inventario[codigo][0]
         stock = inventario[codigo][1]
         if (precio >= p_min and precio <= p_max) and stock > 0:
-            lista_rango.append(f"{detalle[0]} -- {codigo}")
+            lista_rango.append(f"{detalle[0]}--{codigo}")
 
     lista_rango.sort()
 
