@@ -45,6 +45,20 @@ def stock_categoria(categoria, libros, inventario):
     else:
         print("No existen libros en esa categoria")
 
+#==================================
+#FUNCION BUSQUEDA POR PRECIO
+#==================================
+
+def busqueda_precio(p_min, p_max, libros, inventario):
+    libros_rango = []
+    for codigo, detalle in libros.items():
+        precio = inventario[codigo][0]
+        stock = inventario[codigo][1]
+        if (precio >= p_min and precio <= p_max) and stock > 0:
+            libros_rango.append(f"{detalle[0]}--{codigo}")
+    libros_rango.sort()
+    return libros_rango
+
 
 
 #==================================
@@ -84,6 +98,22 @@ def central():
             categoria = input("Ingrese categoria: ")
 
             stock_categoria(categoria, libros, inventario)
+        
+        elif opcion == 2:
+            while True:
+                try:
+                    minimo = int(input("Ingrese precio minimo: "))
+                    maximo = int(input("Ingrese precio maximo: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+            resultado = busqueda_precio(minimo, maximo, libros, inventario)
+
+            if resultado:
+                print(f"Encontrados en el rango: {resultado}")
+
+            else:
+                print("No hay libros en ese rango de precios.")
 
 
 
