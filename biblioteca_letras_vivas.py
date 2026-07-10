@@ -59,6 +59,36 @@ def busqueda_precio(p_min, p_max, libros, inventario):
     libros_rango.sort()
     return libros_rango
 
+#==================================
+#FUNCION AGREGAR LIBRO
+#==================================
+
+def agregar_libro(codigo, categoria, titulo, autor, idioma, estado, precio, cantidad, libros, inventario):
+    if not buscar_libro(codigo, inventario):
+        libros[codigo] = [categoria, titulo, autor, idioma, estado]
+        inventario[codigo] = [precio, cantidad]
+        return True
+    return False
+
+#==================================
+#FUNCION ACTUALIZAR PRECIO
+#==================================
+def actualizar_precio(codigo, precio, libros, inventario):
+    if buscar_libro(codigo, inventario):
+        inventario[codigo][0] = precio
+        return True
+    return False
+
+#==================================
+#FUNCION ELIMINAR LIBRO
+#==================================
+
+def eliminar_libro(codigo, libros, inventario):
+    if buscar_libro(codigo, inventario):
+        del libros[codigo]
+        del inventario[codigo]
+        return True
+    return False
 
 
 #==================================
@@ -95,7 +125,7 @@ def central():
 
         if opcion == 1:
 
-            categoria = input("Ingrese categoria: ")
+            categoria = input("Ingrese categoria: ").title()
 
             stock_categoria(categoria, libros, inventario)
         
@@ -115,12 +145,65 @@ def central():
             else:
                 print("No hay libros en ese rango de precios.")
 
+        elif opcion == 3:
+            codigo = input("Ingrese codigo: ").upper()
+            categoria = input("Ingrese categoria: ").title()
+            titulo = input("Titulo: ").title()
+            autor = input("Autor: ").title()
+            idioma = input("Idioma: ").title()
+            estado = input("Estado: ").title()
+            while True:
+                try:
+                    precio = int(input("Ingrese el precio: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+
+            while True:
+                try:
+                    cantidad = int(input("Ingrese cantidad: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+
+            agregado = agregar_libro(codigo,categoria, titulo, autor, idioma, estado, precio, cantidad, libros, inventario)
+
+            if agregado:
+                print("Libro agregado!!")
+            else:
+                print("El libro ya existe!!")
+        elif opcion == 4:
+            codigo = input("Ingrese el codigo del precio a actualizar: ").upper()
+            while True:
+                try:
+                    precio = int(input("Ingrese el nuevo precio: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+            actualizado = actualizar_precio(codigo, precio, libros, inventario)
+
+            if actualizado:
+                print("Precio actualizado!!")
+
+            else:
+                print("El libro no existe!!")
+
+        elif opcion == 5:
+            codigo = input("Ingrese el codigo del libro a eliminar: ").upper()
+
+            eliminado = eliminar_libro(codigo, libros, inventario)
+
+            if eliminado:
+                print("Libro eliminado!!")
+
+            else:
+                print("El libro no existe!!")
 
 
-        if opcion == 6:
+
+        elif opcion == 6:
             print("Programa finalizado.")
             break
-
 
 
 
