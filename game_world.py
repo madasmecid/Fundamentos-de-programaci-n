@@ -70,6 +70,7 @@ def agregar_videojuego(codigo, genero, nombre, plataforma, clasificacion, multij
         juegos[codigo] = [genero, nombre, plataforma, clasificacion, multijugador]
         inventario[codigo] = [precio, cantidad]
         return True
+    
 
 #====================================
 #FUNCIÓN 4 ACTUALIZAR PRECIO
@@ -147,30 +148,32 @@ def sistema_central():
 
         elif opcion == 3:
             codigo = input("Ingrese codigo: ").upper()
-            genero = input("Genero: ").title()
-            nombre = input("Nombre: ").upper()
-            plataforma = input("Plataforma: ").upper()
-            clasificacion = input("Clasificacion: ").title()
-            multijugador = input("Multijugador: ").title()
-            while True:
-                try:
-                    precio = int(input("Ingrese precio: "))
-                    break
-                except ValueError:
-                    print("Debe ingresar valores enteros!!")
-            while True:
-                try:
-                    cantidad = int(input("Ingrese cantidad: "))
-                    break
-                except ValueError:
-                    print("Debe ingresar valores enteros!!")
-
-            agregado = agregar_videojuego(codigo, genero, nombre, plataforma, clasificacion, multijugador, precio, cantidad, juegos, inventario)
-           
-            if agregado:
-                print("Videojuego agregado!!")
-            else:
+            if buscar_videojuego(codigo, inventario):
                 print("El videojuego ya existe!!")
+            else:
+                genero = input("Genero: ").title()
+                nombre = input("Nombre: ").upper()
+                plataforma = input("Plataforma: ").upper()
+                clasificacion = input("Clasificacion: ").title()
+                multijugador = input("Multijugador: ").title()
+                while True:
+                    try:
+                        precio = int(input("Ingrese precio: "))
+                        break
+                    except ValueError:
+                        print("Debe ingresar valores enteros!!")
+                while True:
+                    try:
+                        cantidad = int(input("Ingrese cantidad: "))
+                        break
+                    except ValueError:
+                        print("Debe ingresar valores enteros!!")
+
+                agregado = agregar_videojuego(codigo, genero, nombre, plataforma, clasificacion, multijugador, precio, cantidad, juegos, inventario)
+            
+                if agregado:
+                    print("Videojuego agregado!!")
+                
         
         elif opcion == 4:
             codigo = input("Ingrese el codigo: ").upper()
@@ -195,7 +198,7 @@ def sistema_central():
             if eliminar:
                 print("Videojuego eliminado!!")
             else:
-                print("El videojuego no existe!!")
+                print("El Videojuego no existe!!")
 
         elif opcion == 6:
             print("Programa finalizado.")
