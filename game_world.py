@@ -59,6 +59,39 @@ def busqueda_precio(p_min, p_max, juegos, inventario):
 
     return lista_rango
 
+#====================================
+#FUNCIÓN 3 AGREGAR VIDEOJUEGO
+#====================================
+
+def agregar_videojuego(codigo, genero, nombre, plataforma, clasificacion, multijugador, precio, cantidad, juegos, inventario):
+    if buscar_videojuego(codigo, inventario):
+        return False
+    else:
+        juegos[codigo] = [genero, nombre, plataforma, clasificacion, multijugador]
+        inventario[codigo] = [precio, cantidad]
+        return True
+
+#====================================
+#FUNCIÓN 4 ACTUALIZAR PRECIO
+#====================================
+
+def actualizar_precio(codigo, precio, juegos, inventario):
+    if buscar_videojuego(codigo, inventario):
+        inventario[codigo][0] = precio
+        return True
+    return False
+
+#====================================
+#FUNCIÓN 5 ELIMINAR JUEGO 
+#====================================
+
+def eliminar_videojuego(codigo, juegos, inventario):
+    if buscar_videojuego(codigo, inventario):
+        del juegos[codigo]
+        del inventario[codigo]
+        return True
+    return False
+
 
 
 #=========================================================
@@ -94,7 +127,7 @@ def sistema_central():
         opcion = leer_opcion()
 
         if opcion == 1:
-            genero = input("Ingrese el genero: ")
+            genero = input("Ingrese el genero: ").title()
             stock_genero(genero, juegos, inventario)
 
         elif opcion == 2:
@@ -112,6 +145,57 @@ def sistema_central():
             else:
                 print("No hay videojuegos en ese rango de precios.")
 
+        elif opcion == 3:
+            codigo = input("Ingrese codigo: ").upper()
+            genero = input("Genero: ").title()
+            nombre = input("Nombre: ").upper()
+            plataforma = input("Plataforma: ").upper()
+            clasificacion = input("Clasificacion: ").title()
+            multijugador = input("Multijugador: ").title()
+            while True:
+                try:
+                    precio = int(input("Ingrese precio: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+            while True:
+                try:
+                    cantidad = int(input("Ingrese cantidad: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+
+            agregado = agregar_videojuego(codigo, genero, nombre, plataforma, clasificacion, multijugador, precio, cantidad, juegos, inventario)
+           
+            if agregado:
+                print("Videojuego agregado!!")
+            else:
+                print("El videojuego ya existe!!")
+        
+        elif opcion == 4:
+            codigo = input("Ingrese el codigo: ").upper()
+            while True:
+                try:
+                    precio = int(input("Ingrese el nuevo precio: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+
+            actualizar = actualizar_precio(codigo, precio, juegos, inventario)
+
+            if actualizar:
+                print("Precio actualizado!!")
+            else:
+                print("El videojuego no existe!!")
+
+        elif opcion == 5:
+            codigo = input("Ingrese codigo del juego a eliminar: ").upper()
+            eliminar = eliminar_videojuego(codigo, juegos, inventario)
+
+            if eliminar:
+                print("Videojuego eliminado!!")
+            else:
+                print("El videojuego no existe!!")
 
         elif opcion == 6:
             print("Programa finalizado.")
