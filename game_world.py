@@ -23,6 +23,12 @@ def leer_opcion():
             print("Debe seleccionar una opcion valida!!")
 
 #====================================
+#FUNCIÓN SIN PALABRAS VACIAS
+#====================================
+def validar_palabra(palabra):
+    return(len(palabra.strip()) > 0)
+
+#====================================
 #FUNCIÓN BUSQUEDA
 #====================================
 def buscar_videojuego(codigo, inventario):
@@ -141,27 +147,64 @@ def sistema_central():
                     print("Debe ingresar valores enteros!!")
             lista = busqueda_precio(minimo, maximo, juegos, inventario)
 
-            if len(lista) > 0:
+            if lista:
                 print(f"{lista}")
             else:
                 print("No hay videojuegos en ese rango de precios.")
 
         elif opcion == 3:
-            codigo = input("Ingrese codigo: ").upper()
+            while True:
+                codigo = input("Ingrese codigo: ").upper()
+                if validar_palabra(codigo):
+                    break
+                else:
+                    print("No puede dejar el campo vacio")
             if buscar_videojuego(codigo, inventario):
                 print("El videojuego ya existe!!")
             else:
-                genero = input("Genero: ").title()
-                nombre = input("Nombre: ").upper()
-                plataforma = input("Plataforma: ").upper()
-                clasificacion = input("Clasificacion: ").title()
-                multijugador = input("Multijugador: ").title()
+                while True:
+                    
+                      genero = input("Genero: ").title()
+                      if validar_palabra(genero):
+                          break
+                      else:
+                          print("No puede dejar el campo vacio.")
+
+                while True:
+                    nombre = input("Nombre: ").upper()
+                    if validar_palabra(nombre):
+                        break
+                    else:
+                        print("No puede dejar el campo vacio")
+
+                while True:
+                    plataforma = input("Plataforma: ").upper()
+                    if validar_palabra(plataforma):
+                        break
+                    else:
+                        print("No puede dejar el campo vacio")
+
+                while True:
+                    clasificacion = input("Clasificacion: ").title()
+                    if validar_palabra(clasificacion):
+                        break
+                    else:
+                        print("No puede dejar el campo vacio.")
+
+                while True:
+                    multijugador = input("Multijugador: ").title()
+                    if validar_palabra(multijugador):
+                        break
+                    else:
+                        print("No puede dejar el campo vacio.")
+
                 while True:
                     try:
                         precio = int(input("Ingrese precio: "))
                         break
                     except ValueError:
                         print("Debe ingresar valores enteros!!")
+
                 while True:
                     try:
                         cantidad = int(input("Ingrese cantidad: "))
