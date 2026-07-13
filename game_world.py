@@ -22,7 +22,42 @@ def leer_opcion():
         except ValueError:
             print("Debe seleccionar una opcion valida!!")
 
+#====================================
+#FUNCIÓN BUSQUEDA
+#====================================
+def buscar_videojuego(codigo, inventario):
+    return(codigo in inventario)
 
+#====================================
+#FUNCIÓN 1 STOCK POR GENERO
+#====================================
+
+def stock_genero(genero, juegos, inventario):
+    stock_total = 0
+    for codigo, detalle in juegos.items():
+        if genero.lower() == detalle[0].lower():
+            stock_total += inventario[codigo][1]
+
+    if stock_total > 0:
+        print(f"Stock total del genero {genero}: {stock_total}")
+    else:
+        print(f"El genero {genero} no tiene stock.")
+        
+#====================================
+#FUNCIÓN 2 BUSQUEDA POR PRECIO
+#====================================
+
+def busqueda_precio(p_min, p_max, juegos, inventario):
+    lista_rango = []
+    for codigo, detalle in inventario.items():
+        precio = detalle[0]
+        stock = detalle[1]
+        if (precio >= p_min and precio <= p_max) and stock > 0:
+            lista_rango.append(f"{juegos[codigo][0]}--{codigo}")
+
+    lista_rango.sort()
+
+    return lista_rango
 
 
 
@@ -59,7 +94,23 @@ def sistema_central():
         opcion = leer_opcion()
 
         if opcion == 1:
-            pass
+            genero = input("Ingrese el genero: ")
+            stock_genero(genero, juegos, inventario)
+
+        elif opcion == 2:
+            while True:
+                try:
+                    minimo = int(input("Ingrese precio minimo: "))
+                    maximo = int(input("Ingrese precio maximo: "))
+                    break
+                except ValueError:
+                    print("Debe ingresar valores enteros!!")
+            lista = busqueda_precio(minimo, maximo, juegos, inventario)
+
+            if len(lista) > 0:
+                print(f"{lista}")
+            else:
+                print("No hay videojuegos en ese rango de precios.")
 
 
         elif opcion == 6:
