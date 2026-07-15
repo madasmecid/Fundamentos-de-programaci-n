@@ -182,19 +182,28 @@ def sistema_central():
                 while True:
                     try:
                         edad = int(input("Ingrese edad:  "))
-                        break
+                        if edad >= 0:
+                            break
+                        else:
+                            print("Edad no puede ser menor que 0.")
                     except ValueError:
                         print("Ingrese valor númerico entero!!")
                 while True:
                     try:
                         costo = int(input("Ingrese costo: "))
-                        break
+                        if costo > 0:
+                           break
+                        else:
+                            print("EL precio no puede ser menor o igual a 0")
                     except ValueError:
                         print("Ingrese valor numerico entero!!")
                 while True:
                     try:
                         cantidad_visitas = int(input("Ingrese cantidad: "))
-                        break
+                        if cantidad_visitas >= 0:
+                             break
+                        else:
+                            print("Las visitas no pueden ser menor a 0")
                     except ValueError:
                         print("Ingrese valor numerico entero!!")
 
