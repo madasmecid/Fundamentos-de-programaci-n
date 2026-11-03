@@ -11,9 +11,13 @@ def obtener_aprobados (notas, nota_minima):
 
 
 def calcular_promedio(aprobados):
-    promedio = sum(aprobados) / len(aprobados)
 
-    return promedio
+    if not aprobados:
+        return 0.0
+
+    return sum(aprobados) / len(aprobados)
+
+    
 
 
 
